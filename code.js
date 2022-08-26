@@ -41,21 +41,17 @@ function obtenerDatosDelUsuario() {
 	let year = new Date(time).getFullYear();
 
 	datosPersona.nombre = prompt("Ingrese su nombre: ");
-	let age = parseInt(prompt("Ingresa el año en que naciste: "));
-	while (isNaN(age)) {
+	let age = Number(prompt("Ingresa el año en que naciste: "));
+	while (isNaN(age) || age <= 0) {
 		alert("Por favor ingresa un valor válido");
-		age = parseInt(prompt("Ingresa el año en que naciste: "));
+		age = Number(prompt("Ingresa el año en que naciste: "));
 	}
 	datosPersona.edad = year - age;
 
 	datosPersona.ciudad = prompt("Ingrese la ciudad en la que se encuentra");
 
-	let js = confirm("¿Tiene interés por JavaScript?");
-	if (js) {
-		datosPersona.interesPorJs = "Si";
-	} else {
-		datosPersona.interesPorJs = "No";
-	}
+	let js = confirm("¿Tiene interés por JavaScript?")?"Si" :"No";
+	
 }
 
 function renderizarDatosUsuario() {
@@ -68,7 +64,7 @@ function renderizarDatosUsuario() {
 	document.getElementById("javascript").innerHTML = datosPersona.interesPorJs;
 }
 
-let cards = [
+/* let cards = [
 	{
 		imagen:
 			"https://www.nicepng.com/png/full/141-1415510_psd-to-html-and-css3-html-css.png",
@@ -90,16 +86,16 @@ let cards = [
 		lenguajes: "JavaScript",
 		bimestre: "3er Bimestre",
 	},
-];
+];*/
 
 function recorrerListadoYRenderizarTarjetas() {
 	/* ------------------ PUNTO 3: Escribe tu codigo desde aqui ------------------ */
 	const fila = document.querySelector("#fila");
 	fila.innerHTML = ``;
-	cards.forEach((card) => {
+	listado.forEach((card) => {
 		fila.innerHTML += `
     <li class = "caja">
-    <img src="${card.imagen}" alt="${card.alt}">
+    <img src="${card.imgUrl}" alt="${card.alt}">
     <p> ${card.lenguajes}</p>
     <p> ${card.bimestre}</p>
     </li>
@@ -118,8 +114,7 @@ document.addEventListener(
 	"keypress",
 	(event) => {
 		var name = event.key;
-		var code = event.code;
-		if (name == "F") {
+		if (name == "F" || name =="f") {
 			document.querySelector("#sobre-mi").removeAttribute("class");
 		}
 	},
